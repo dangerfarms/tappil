@@ -1,7 +1,9 @@
-from django.shortcuts import get_object_or_404, redirect
-from django.views.generic import View, TemplateView
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
+from django.views.generic import TemplateView
 from tappil.links.models import Link
 from tappil.profiles.models import Profile
+from tappil.profiles.response import DeepLinkRedirect
 from tappil.referrers.models import Referrer
 import user_agents
 
@@ -17,9 +19,6 @@ Link.objects.get_or_create(
 class Activation(TemplateView):
     template_name = 'index.html'
 
-    def match_profile(self):
-        pass
-
     def set_profile(self, profile):
         ua_string = self.request.META['HTTP_USER_AGENT']
         user_agent = user_agents.parse(ua_string)
@@ -32,7 +31,7 @@ class Activation(TemplateView):
 
     def generate_response(self, profile, link):
         if profile.device_family == 'iPhone':
-            return redirect(link.deep_link)
+            return DeepLinkRedirect(link.deep_link)
         return self.render_to_response({'profile': profile})
 
     def get_link(self):
