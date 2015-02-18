@@ -1,0 +1,3 @@
+django
+jsonfield
+user-agents
