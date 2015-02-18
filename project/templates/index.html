@@ -5,29 +5,8 @@
 </head>
 <body>
     <h1>Details</h1>
-    <p>You have followed this link from a {{ user_agent.device.family }}</p>
-
-    <h2>More Details</h2>
-
-    <div>
-        User agent: {{ user_agent }}
-    </div>
-
-    <div>
-        IP: {{ ip }}
-    </div>
-
-    <div>
-        extra data (for calculating users): {{ metadata }}
-    </div>
-
-    <div>
-        referrer: {{ referrer }}
-    </div>
-
-    <div>
-        request: {{ request }}
-    </div>
+    <p>You have followed this link from a {{ profile.device_family }}</p>
+    <p>As it is not an iPhone, we would redirect you to pinseekerz.com</p>
 
 </body>
 </html>

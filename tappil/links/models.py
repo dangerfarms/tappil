@@ -4,6 +4,8 @@ from tappil.referrers.models import Referrer
 
 class Link(models.Model):
 
-    url = models.URLField()
+    code = models.TextField()
     referrer = models.ForeignKey(Referrer, related_name='links')
     deep_link = models.TextField()
+
+
