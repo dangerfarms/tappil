@@ -37,9 +37,7 @@ class Activation(TemplateView):
         link = self.get_link()
 
         ip = request.META['REMOTE_ADDR']
-        profile, created = Profile.objects.get_or_create(ip=ip)
+        profile, created = Profile.objects.get_or_create(ip=ip, link=link)
         self.set_profile(profile)
-        profile.link = link
-        profile.save()
-
+        
         return self.generate_response(profile, link)
