@@ -48,12 +48,12 @@ class ProfileMatch(APIView):
         device, created = Device.objects.get_or_create(**device_lookup)
 
         profile = self.match_profile(ip, data)
-        profile.uuid = request.data.get('device_uuid', None)
-        if not profile.installed_on:
-            profile.installed_on = timezone.now()
-        profile.save()
+        if profile:
+            profile.uuid = request.data.get('device_uuid', None)
+            if not profile.installed_on:
+                profile.installed_on = timezone.now()
+            profile.save()
 
-
-
-        serializer = ProfileSerializer(profile)
-        return Response(serializer.data)
+            serializer = ProfileSerializer(profile)
+            return Response(serializer.data)
+        return Response({})
