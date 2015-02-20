@@ -18,6 +18,7 @@ class Activation(TemplateView):
         profile.device_version = user_agent.os.version_string
 
         profile.meta_data = dict(self.request.GET)
+        profile.save()
 
     def generate_response(self, profile, link):
         if profile.device_family == 'iPhone':
@@ -39,5 +40,5 @@ class Activation(TemplateView):
         ip = request.META['REMOTE_ADDR']
         profile, created = Profile.objects.get_or_create(ip=ip, link=link)
         self.set_profile(profile)
-        
+
         return self.generate_response(profile, link)
