@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'tappil.campaigns',
+    'tappil.devices',
     'tappil.links',
     'tappil.profiles',
     'tappil.referrers',

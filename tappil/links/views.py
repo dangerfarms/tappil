@@ -1,18 +1,9 @@
-# Create your views here.
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView
 from tappil.links.models import Link
 from tappil.links.response import DeepLinkRedirect
 from tappil.profiles.models import Profile
-from tappil.referrers.models import Referrer
 import user_agents
-
-referrer = Referrer.objects.get_or_create(name='MeAndMyGolf')[0]
-Link.objects.get_or_create(
-    code='test',
-    referrer=referrer,
-    deep_link="pinseekerz:///path/to/something?params=are&great=no#/fragment/maybe/a/better/url/route"
-)
 
 
 class Activation(TemplateView):

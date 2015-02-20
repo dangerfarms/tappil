@@ -1,6 +1,7 @@
 from django.utils import timezone
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from tappil.devices.models import Device
 from tappil.profiles.models import Profile
 from tappil.profiles.serializers import ProfileSerializer
 
@@ -37,10 +38,22 @@ class ProfileMatch(APIView):
         """
         ip = request.META['REMOTE_ADDR']
         data = request.data
+
+        device_lookup = {
+            'uuid': data.get('device_uuid'),
+            'family': data.get('device_family'),
+            'os': data.get('device_os'),
+            'version': data.get('device_version'),
+        }
+        device, created = Device.objects.get_or_create(**device_lookup)
+
         profile = self.match_profile(ip, data)
-        profile.uuid = request.data.get('uuid', None)
+        profile.uuid = request.data.get('device_uuid', None)
         if not profile.installed_on:
             profile.installed_on = timezone.now()
         profile.save()
+
+
+
         serializer = ProfileSerializer(profile)
         return Response(serializer.data)
