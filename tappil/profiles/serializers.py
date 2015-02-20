@@ -12,4 +12,6 @@ class ProfileSerializer(serializers.ModelSerializer):
         depth = 1
 
     def get_meta_data(self, obj):
-        return ast.literal_eval(obj.meta_data)
+        if obj.meta_data:
+            return ast.literal_eval(obj.meta_data)
+        return {}
