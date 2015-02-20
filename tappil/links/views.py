@@ -18,7 +18,7 @@ class Activation(TemplateView):
         profile.device_os = user_agent.os.family
         profile.device_version = user_agent.os.version_string
 
-        profile.meta_data = {k: v[0] for k, v in self.request.GET.items()}
+        profile.meta_data = {k: v for k, v in self.request.GET.items()}
 
         profile.save()
 
