@@ -8,6 +8,7 @@ import jsonfield.fields
 class Migration(migrations.Migration):
 
     dependencies = [
+        ('links', '0001_initial'),
     ]
 
     operations = [
@@ -19,7 +20,9 @@ class Migration(migrations.Migration):
                 ('device_family', models.TextField()),
                 ('device_os', models.TextField()),
                 ('device_version', models.TextField()),
+                ('uuid', models.TextField()),
                 ('meta_data', jsonfield.fields.JSONField()),
+                ('link', models.ForeignKey(related_name='profiles', to='links.Link')),
             ],
             options={
             },
