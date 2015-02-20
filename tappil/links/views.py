@@ -13,6 +13,7 @@ class Activation(TemplateView):
         ua_string = self.request.META['HTTP_USER_AGENT']
         user_agent = user_agents.parse(ua_string)
 
+        profile.user_agent = ua_string
         profile.device_family = user_agent.device.family
         profile.device_os = user_agent.os.family
         profile.device_version = user_agent.os.version_string

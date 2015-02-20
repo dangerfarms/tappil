@@ -10,6 +10,7 @@ class Profile(models.Model):
     device_os = models.TextField()
     device_version = models.TextField()
     uuid = models.TextField(unique=True, null=True)
+    user_agent = models.TextField()
 
     link = models.ForeignKey(Link, related_name='profiles')
 
