@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView
 from tappil.links.models import Link
@@ -28,6 +29,7 @@ class Activation(TemplateView):
 
     def generate_response(self, profile, link):
         if profile.device_family == 'iPhone':
+            return HttpResponseRedirect('https://itunes.apple.com/gb/app/pin-seekerz-golf-world-ranking/id933904752')
             return DeepLinkRedirect(link.deep_link)
         return self.render_to_response({'profile': profile})
 
