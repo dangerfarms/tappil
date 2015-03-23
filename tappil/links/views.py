@@ -28,10 +28,8 @@ class Activation(TemplateView):
         profile.save()
 
     def generate_response(self, profile, link):
-        if profile.device_family == 'iPhone':
-            return HttpResponseRedirect('https://itunes.apple.com/gb/app/pin-seekerz-golf-world-ranking/id933904752')
-            return DeepLinkRedirect(link.deep_link)
-        return self.render_to_response({'profile': profile})
+        return HttpResponseRedirect('https://itunes.apple.com/gb/app/pin-seekerz-golf-world-ranking/id933904752')
+        # return self.render_to_response({'profile': profile})
 
     def get_link(self):
         link_code = self.kwargs['code']
