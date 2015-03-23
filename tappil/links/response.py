@@ -6,7 +6,7 @@ from django.utils.encoding import force_text, iri_to_uri
 
 class DeepLinkRedirect(HttpResponse):
     status_code = 302
-    allowed_schemes = ['pinseekerz',]
+    allowed_schemes = ['pinseekerz', 'https', 'http',]
 
     def __init__(self, redirect_to, *args, **kwargs):
         parsed = urlparse(force_text(redirect_to))

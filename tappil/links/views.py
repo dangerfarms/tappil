@@ -9,9 +9,13 @@ import user_agents
 class Activation(TemplateView):
     template_name = 'index.html'
 
-    def set_profile(self, profile):
+    def get_user_agent(self):
         ua_string = self.request.META['HTTP_USER_AGENT']
         user_agent = user_agents.parse(ua_string)
+        return ua_string, user_agent
+
+    def set_profile(self, profile):
+        ua_string, user_agent = self.get_user_agent()
 
         profile.user_agent = ua_string
         profile.device_family = user_agent.device.family
