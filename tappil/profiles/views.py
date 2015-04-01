@@ -50,10 +50,13 @@ class ProfileMatch(APIView):
         profile = self.match_profile(ip, data)
         if profile:
             profile.uuid = request.data.get('device_uuid', None)
-            if not profile.installed_on:
+            new_install = profile.installed_on is None
+            if new_install:
                 profile.installed_on = timezone.now()
             profile.save()
-
             serializer = ProfileSerializer(profile)
-            return Response(serializer.data)
+            # TODO: this is not nice at all, sorry (balint)
+            data = serializer.data
+            data['new_install'] = new_install
+            return Response(data)
         return Response({})

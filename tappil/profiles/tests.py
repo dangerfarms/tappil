@@ -1,3 +1,4 @@
+from django.utils import timezone
 from rest_framework.reverse import reverse
 from rest_framework.test import APITestCase
 from tappil.links.models import Link
@@ -7,18 +8,22 @@ from tappil.referrers.models import Referrer
 
 class ProfileMatchTest(APITestCase):
 
-    def test_should_update_profile_to_match_on_success(self):
-        deep_link = 'pinseekerz://activate?param=true#/path/to/go/to'
+    deep_link = 'pinseekerz://activate?param=true#/path/to/go/to'
+
+    def create_profile(self):
         r = Referrer.objects.create(name='test-referrer')
-        l = Link.objects.create(code='code', referrer=r, deep_link=deep_link)
-        p = Profile.objects.create(ip='1.1.1.1', link=l)
+        l = Link.objects.create(code='code', referrer=r, deep_link=self.deep_link)
+        Profile.objects.create(ip='1.1.1.1', link=l)
+
+    def test_should_update_profile_to_match_on_success(self):
+        self.create_profile()
         phone_data = {
             'device_os': 'iOS',
         }
 
         response = self.client.post(reverse('profile-match'), phone_data, **{'REMOTE_ADDR':'1.1.1.1'})
 
-        self.assertEqual(response.data['link']['deep_link'], deep_link)
+        self.assertEqual(response.data['link']['deep_link'], self.deep_link)
 
     def test_should_find_best_possible_match(self):
         """
@@ -46,3 +51,25 @@ class ProfileMatchTest(APITestCase):
 
         self.assertEqual(response.data['link']['deep_link'], deep_link)
         self.assertEqual(response.data['id'], p.id)
+
+    def test_should_return_new_install_field_for_new_installs(self):
+        self.create_profile()
+        phone_data = {
+            'device_os': 'iOS',
+        }
+
+        response = self.client.post(reverse('profile-match'), phone_data, **{'REMOTE_ADDR':'1.1.1.1'})
+        self.assertEqual(response.data['new_install'], True)
+
+    def test_should_return_false_new_install_field_for_not_new_installs(self):
+        self.create_profile()
+        phone_data = {
+            'device_os': 'iOS'
+        }
+
+        # initial create
+        self.client.post(reverse('profile-match'), phone_data, **{'REMOTE_ADDR':'1.1.1.1'})
+
+        # second call
+        response = self.client.post(reverse('profile-match'), phone_data, **{'REMOTE_ADDR':'1.1.1.1'})
+        self.assertEqual(response.data['new_install'], False)
