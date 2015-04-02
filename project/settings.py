@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -26,7 +27,6 @@ TEMPLATE_DEBUG = False
 
 ALLOWED_HOSTS = []
 
-
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -40,10 +40,15 @@ INSTALLED_APPS = (
     'tappil.links',
     'tappil.profiles',
     'tappil.referrers',
+
+    'corsheaders',
 )
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',
+
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -86,7 +91,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, "project" , "static")
+STATIC_ROOT = os.path.join(BASE_DIR, "project", "static")
 
 
 # TEMPLATES
@@ -95,7 +100,10 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'project', 'templates'),
 )
 
-
 ALLOWED_HOSTS = [
     'referrals.pinseekerz.com'
 ]
+
+CORS_ORIGIN_WHITELIST = (
+    'localhost:8100',
+)

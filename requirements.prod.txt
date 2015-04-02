@@ -2,3 +2,4 @@ django
 djangorestframework
 jsonfield
 user-agents
+django-cors-headers
