@@ -4,7 +4,7 @@ from tappil.profiles.models import Profile
 
 class ProfileAdmin(admin.ModelAdmin):
 
-    list_display = ('uuid', 'ip', 'device_family', 'device_ios', 'device_version')
+    list_display = ('uuid', 'ip', 'device_family', 'device_os', 'device_version', 'user_agent')
 
 
-admin.site.register(Profile)
+admin.site.register(Profile, ProfileAdmin)
