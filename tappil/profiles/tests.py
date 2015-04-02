@@ -61,6 +61,14 @@ class ProfileMatchTest(APITestCase):
         response = self.client.post(reverse('profile-match'), phone_data, **{'REMOTE_ADDR':'1.1.1.1'})
         self.assertEqual(response.data['new_install'], True)
 
+    def test_should_return_non_matching_new_install_field_for_new_installs(self):
+        phone_data = {
+            'device_os': 'iOS',
+        }
+
+        response = self.client.post(reverse('profile-match'), phone_data, **{'REMOTE_ADDR':'1.1.1.1'})
+        self.assertEqual(response.data['new_install'], True)
+
     def test_should_return_false_new_install_field_for_not_new_installs(self):
         self.create_profile()
         phone_data = {

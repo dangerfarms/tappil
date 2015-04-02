@@ -59,4 +59,4 @@ class ProfileMatch(APIView):
             data = serializer.data
             data['new_install'] = new_install
             return Response(data)
-        return Response({})
+        return Response({'new_install': True})
