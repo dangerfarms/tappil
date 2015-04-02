@@ -42,7 +42,7 @@ class ProfileMatch(APIView):
         device_lookup = {
             'uuid': data.get('device_uuid'),
             'family': data.get('device_family'),
-            'os': data.get('device_os'),
+            'os': data.get('device_platform'),
             'version': data.get('device_version'),
         }
         device, created = Device.objects.get_or_create(**device_lookup)
