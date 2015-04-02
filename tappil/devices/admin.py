@@ -6,4 +6,4 @@ class DeviceAdmin(admin.ModelAdmin):
 
     list_display = ('uuid', 'family', 'os', 'version',)
 
-admin.site.register(Device)
+admin.site.register(Device, DeviceAdmin)
