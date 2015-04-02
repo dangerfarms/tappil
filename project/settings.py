@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = os.environ['REFERRALS_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 TEMPLATE_DEBUG = False
 
@@ -101,7 +101,8 @@ TEMPLATE_DIRS = (
 )
 
 ALLOWED_HOSTS = [
-    'referrals.pinseekerz.com'
+    'tappil.dangerfarms.com',
+    'referrals.pinseekerz.com',
 ]
 
 CORS_ORIGIN_WHITELIST = (
