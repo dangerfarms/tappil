@@ -9,14 +9,14 @@ class Profile(models.Model):
     device_family = models.TextField()
     device_os = models.TextField()
     device_version = models.TextField()
-    uuid = models.TextField(unique=True, null=True)
+    uuid = models.TextField(unique=True, null=True, blank=True)
     user_agent = models.TextField()
 
     link = models.ForeignKey(Link, related_name='profiles')
 
     meta_data = JSONField()
 
-    installed_on = models.DateTimeField(null=True)
+    installed_on = models.DateTimeField(null=True, blank=True)
 
     # port REMOTE_PORT
     # language_  'HTTP_ACCEPT_LANGUAGE': 'en-GB,en;q=0.8,en-US;q=0.6,hu;q=0.4',
