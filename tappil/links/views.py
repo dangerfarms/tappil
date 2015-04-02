@@ -50,9 +50,6 @@ class Activation(TemplateView):
 
 
         """
-        user_string, agent = self.get_user_agent()
-        import ipdb; ipdb.set_trace()
-
         link = self.get_link()
 
         ip = request.META['REMOTE_ADDR']
