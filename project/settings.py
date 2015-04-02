@@ -97,5 +97,6 @@ TEMPLATE_DIRS = (
 
 
 ALLOWED_HOSTS = [
-    'referrals.pinseekerz.com'
+    'tappil.dangerfarms.com',
+    'referrals.pinseekerz.com',
 ]
