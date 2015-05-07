@@ -16,5 +16,5 @@ app_patterns = patterns('',
 
 
 urlpatterns = patterns('',
-    url(r'%s/' % settings.APP_PATH_PREFIX, include(app_patterns))
+    url(r'^%s' % settings.APP_PATH_PREFIX, include(app_patterns))
 )

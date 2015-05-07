@@ -91,7 +91,7 @@ USE_TZ = True
 
 APP_PATH_PREFIX = os.getenv('APP_PATH_PREFIX', '')
 
-STATIC_URL = os.getenv('STATIC_URL', '%s/static/')
+STATIC_URL = os.getenv('STATIC_URL', '/%sstatic/' % APP_PATH_PREFIX)
 
 STATIC_ROOT = os.path.join(BASE_DIR, "project", "static")
 
