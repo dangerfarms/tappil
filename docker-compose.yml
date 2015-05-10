@@ -1,5 +1,5 @@
 web:
-  command: uwsgi --http :8000 --wsgi-file project/wsgi.py --static-map /referrals/static=/app/project/static
+  command: uwsgi --socket 127.0.0.1:8000 --wsgi-file project/wsgi.py --static-map /referrals/static=/app/project/static
   build: .
   volumes:
     - .:/app
