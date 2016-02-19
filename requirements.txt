@@ -1,5 +1,8 @@
 django
 djangorestframework
-jsonfield
-user-agents
 django-cors-headers
+dj-database-url
+jsonfield
+psycopg2
+user-agents
+uwsgi

@@ -5,7 +5,7 @@ from tappil.links.models import Link
 
 class Profile(models.Model):
 
-    ip = models.IPAddressField()
+    ip = models.GenericIPAddressField()
     device_family = models.TextField()
     device_os = models.TextField()
     device_version = models.TextField()

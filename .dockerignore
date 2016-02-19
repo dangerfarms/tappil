@@ -1,0 +1,8 @@
+.gitignore
+.git
+.config
+docker-compose.*
+Dockerfile
+.dockerignore
+.idea
+.up
