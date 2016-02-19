@@ -1,5 +1,5 @@
 web:
-  command: /bin/bash --login -c "./manage.py collectstatic --noinput && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+  command: /bin/bash --login -c "./manage.py migrate && ./manage.py runserver 0.0.0.0:8000"
   tty: true
   build: .
   volumes:
