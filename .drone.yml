@@ -1,9 +1,11 @@
 build:  
   image: python:3.4
   commands:
-    - psql -c 'create database postgres;' -U postgres
-    - echo "DATABASE_URL = 'postgis://postgres@127.0.0.1:5432/postgres'" > project/config/settings.py
+    - echo "DATABASE_URL = 'postgis://postgres:postgres@127.0.0.1:5432/postgres'" > project/config/settings.py
     - pip install -r requirements.txt
     - python manage.py test --settings=project.settings_test
-services:
-  - postgres
+compose:	
+  db:
+    image: mdillon/postgis
+    environment:
+      - POSTGRES_PASWORD=postgres
