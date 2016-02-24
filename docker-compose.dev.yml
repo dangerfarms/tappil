@@ -1,20 +1,22 @@
 web:
   command: /bin/bash --login -c "./manage.py collectstatic --noinput && ./manage.py migrate && uwsgi --http :8000 --wsgi-file project/wsgi.py --manage-script-name --static-map /static=/app/project/static;"
-  tty: true
   build: .
   volumes_from:
-    - config
+  - config
   links:
-    - db
+  - db
   ports:
     - 8000
   labels:
     io.rancher.sidekicks: config
+    io.rancher.loadbalancer.target.referrals: tappil.pinseekerz.com=8000
+
 db:
   image: mdillon/postgis
   environment:
-    - POSTGRES_PASWORD=postgres
+  - POSTGRES_PASWORD=postgres
+
 config:
-  build: .
-  command: /bin/true
-  tty: true
+  build: .config/dev
+  labels:
+    io.rancher.container.start_once: "true"
