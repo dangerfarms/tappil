@@ -9,3 +9,11 @@ compose:
     image: mdillon/postgis
     environment:
       - POSTGRES_PASWORD=postgres
+notify:
+  slack:
+    webhook_url: 'https://hooks.slack.com/services/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'
+    username: 'drone'
+    channel: '#gluers'
+    on_started: false
+    on_success: true
+    on_failure: true
