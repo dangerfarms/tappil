@@ -15,6 +15,9 @@ class ProfileMatchTest(APITestCase):
         l = Link.objects.create(code='code', referrer=r, deep_link=self.deep_link)
         Profile.objects.create(ip='1.1.1.1', link=l)
 
+    def test_fail(self):
+        self.fail()
+
     def test_should_update_profile_to_match_on_success(self):
         self.create_profile()
         phone_data = {
