@@ -17,3 +17,9 @@ notify:
     on_started: false
     on_success: true
     on_failure: true
+    template: |
+      {{#success build.status}}
+        {{ build.author }} is a bad ass coding gold on {{ build.link_url }} ({{ build.branch}}).
+      {{else}}
+        {{ build.author }} broke the build. Go to #the-taylor-swift-room please you naughty dev.
+      {{/success}}
