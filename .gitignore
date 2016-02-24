@@ -4,5 +4,5 @@ db.sqlite3
 *.pyc
 .env
 .config
-project/config
+project/config/settings.py
 project/static

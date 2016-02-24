@@ -1,5 +1,6 @@
 build:  
   image: python:3.4
   commands:
+    - touch -project/config/settings.py
     - pip install -r requirements.txt
     - python manage.py test --settings=project.settings_test
