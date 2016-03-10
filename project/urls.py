@@ -1,10 +1,13 @@
 from django.conf.urls import include, url
 from django.contrib import admin
 
+
 api_patterns = [
     url(r'^profile/', include('tappil.profiles.urls')),
     url(r'^link/', include('tappil.links.urls')),
+    url(r'^referrers/', include('tappil.referrers.urls')),
 ]
+
 
 urlpatterns = [
     url(r'^dn/', include(admin.site.urls)),

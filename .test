@@ -1,0 +1,1 @@
+docker-compose run --rm web ./manage.py test --settings=project.settings_test --keepdb $@;
