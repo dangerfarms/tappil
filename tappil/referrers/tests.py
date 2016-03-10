@@ -1,3 +1,4 @@
+from unittest import skip
 from unittest.mock import patch
 
 from django.utils import timezone
@@ -85,6 +86,6 @@ class ReferrerForIpTest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['referrer'], referrer_name)
 
-    # TODO:
+    @skip("For 11th March, queue looking at this one year from now still untouched.")
     def test_should_return_referrer_from_profiles_containing_installed_on_entries(self):
-        pass
+        self.fail()
