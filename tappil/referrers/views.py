@@ -16,7 +16,7 @@ class ReferrerForIp(APIView):
         given time, transformed by a key function.
         """
         def time_difference(profile):
-            return abs((given_time - profile.installed_on).microseconds)
+            return abs((given_time - profile.installed_on).total_seconds())
         return min(queryset, key=time_difference)
 
     def get(self, request, *args, **kwargs):
@@ -32,6 +32,6 @@ class ReferrerForIp(APIView):
         try:
             user_joined_date = serializer.validated_data['user_joined_on']
             profile = self.get_closest_profile_installation(profiles, user_joined_date)
-        except KeyError:
+        except (KeyError, TypeError):
             profile = profiles.order_by('installed_on').first()
         return Response({'referrer': profile.link.referrer.name})

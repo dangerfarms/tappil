@@ -74,9 +74,9 @@ class ReferrerForIpTest(APITestCase):
         link = LinkFactory(referrer=referrer)
         other_link = LinkFactory(referrer=other_referrer)
 
+        ProfileFactory(ip=ip, link=other_link, installed_on=self.aware_datetime(2015, 12, 29, 0, 0))
         ProfileFactory(ip=ip, link=link, installed_on=self.aware_datetime(2015, 12, 30, 0, 0))
-        ProfileFactory(ip=ip, link=link, installed_on=self.aware_datetime(2015, 12, 30, 0, 0))
-        ProfileFactory(ip=ip, link=link, installed_on=self.aware_datetime(2016, 1, 5, 0, 0))
+        ProfileFactory(ip=ip, link=other_link, installed_on=self.aware_datetime(2016, 1, 5, 0, 0))
 
         response = self.client.get(self.url, {
             'ip': ip,
@@ -86,6 +86,26 @@ class ReferrerForIpTest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['referrer'], referrer_name)
 
-    @skip("For 11th March, queue looking at this one year from now still untouched.")
     def test_should_return_referrer_from_profiles_containing_installed_on_entries(self):
-        self.fail()
+        ip = '123.123.123.123'
+        referrer_name = 'peterFinch'
+        other_referrer_name = 'richShiels'
+
+        referrer = ReferrerFactory(name=referrer_name)
+        other_referrer = ReferrerFactory(name=other_referrer_name)
+
+        link = LinkFactory(referrer=referrer)
+        other_link = LinkFactory(referrer=other_referrer)
+
+        ProfileFactory(ip=ip, link=other_link)
+        ProfileFactory(ip=ip, link=link, installed_on=self.aware_datetime(2015, 12, 30, 0, 0))
+        ProfileFactory(ip=ip, link=other_link)
+        ProfileFactory(ip=ip, link=other_link)
+
+        response = self.client.get(self.url, {
+            'ip': ip,
+            'user_joined_on': '2015-12-30T09:00:00Z'
+        })
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['referrer'], referrer_name)
