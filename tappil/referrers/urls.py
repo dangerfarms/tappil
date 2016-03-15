@@ -1,5 +1,5 @@
-from django.conf.urls import patterns, url
-from tappil.profiles.views import ProfileMatch
+from django.conf.urls import url
+
 from tappil.referrers.views import ReferrerForIp
 
 
