@@ -1,4 +1,5 @@
 from rest_framework.exceptions import NotFound
+from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -9,6 +10,7 @@ from tappil.referrers.serializers import ReferralForIpSerializer
 class ReferrerForIp(APIView):
 
     URL_NAME = 'referrer-for-ip'
+    permission_classes = (IsAdminUser,)
 
     def get_closest_profile_installation(self, queryset, given_time):
         """
