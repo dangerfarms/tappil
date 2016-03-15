@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from tappil.profiles.models import Profile
+from tappil.profiles.serializers import ProfileSerializer, ProfileIPSerializer
 from tappil.referrers.serializers import ReferralForIpSerializer
 
 
@@ -36,4 +37,5 @@ class ReferrerForIp(APIView):
             profile = self.get_closest_profile_installation(profiles, user_joined_date)
         except (KeyError, TypeError):
             profile = profiles.order_by('installed_on').first()
-        return Response({'referrer': profile.link.referrer.name})
+        serializer = ProfileIPSerializer(profile)
+        return Response(serializer.data)

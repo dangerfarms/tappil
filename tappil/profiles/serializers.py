@@ -13,3 +13,16 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     def get_meta_data(self, obj):
         return obj.meta_data
+
+
+class ProfileIPSerializer(serializers.ModelSerializer):
+
+    referrer = serializers.ReadOnlyField(source='link.referrer.name')
+    meta_data = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Profile
+        depth = 1
+
+    def get_meta_data(self, obj):
+        return obj.meta_data
