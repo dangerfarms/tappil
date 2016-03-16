@@ -43,14 +43,11 @@ class ReferrerForIp(APIView):
             raise NotFound()
         try:
             user_joined_date = serializer.validated_data['user_joined_on']
-            logger.warn(user_joined_date)
             profile = self.get_closest_profile_installation(profiles, user_joined_date)
         except (KeyError, TypeError) as e:
-            logger.warn(e)
             profile = profiles \
                 .annotate(null_installed_on=Count('installed_on')) \
-                .order_by('installed_on') \
+                .order_by('-null_installed_on', 'installed_on') \
                 .first()
-                # .order_by('-null_installed_on', 'installed_on') \
         serializer = ProfileIPSerializer(profile)
         return Response(serializer.data)
