@@ -27,7 +27,7 @@ class ReferrerForIp(APIView):
         """
         def time_difference(profile):
             if profile.installed_on is None:
-                return timedelta.max
+                return timedelta.max.total_seconds()
             return abs((given_time - profile.installed_on).total_seconds())
         return min(queryset, key=time_difference)
 
