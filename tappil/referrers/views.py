@@ -1,3 +1,4 @@
+from datetime import timedelta
 from rest_framework.exceptions import NotFound
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
@@ -19,6 +20,8 @@ class ReferrerForIp(APIView):
         given time, transformed by a key function.
         """
         def time_difference(profile):
+            if profile.installed_on is None:
+                return timedelta.max
             return abs((given_time - profile.installed_on).total_seconds())
         return min(queryset, key=time_difference)
 
