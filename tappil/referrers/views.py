@@ -1,12 +1,18 @@
+import logging
 from datetime import timedelta
+
+from django.db.models import Count
 from rest_framework.exceptions import NotFound
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from tappil.profiles.models import Profile
-from tappil.profiles.serializers import ProfileSerializer, ProfileIPSerializer
+from tappil.profiles.serializers import ProfileIPSerializer
 from tappil.referrers.serializers import ReferralForIpSerializer
+
+
+logger = logging.getLogger(__name__)
 
 
 class ReferrerForIp(APIView):
@@ -37,8 +43,14 @@ class ReferrerForIp(APIView):
             raise NotFound()
         try:
             user_joined_date = serializer.validated_data['user_joined_on']
+            logger.warn(user_joined_date)
             profile = self.get_closest_profile_installation(profiles, user_joined_date)
         except (KeyError, TypeError):
-            profile = profiles.order_by('installed_on').first()
+            logger.warn("Couldn't get user join date")
+            profile = profiles \
+                .annotate(null_installed_on=Count('installed_on')) \
+                .order_by('installed_on') \
+                .first()
+                # .order_by('-null_installed_on', 'installed_on') \
         serializer = ProfileIPSerializer(profile)
         return Response(serializer.data)
