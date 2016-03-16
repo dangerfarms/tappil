@@ -52,8 +52,8 @@ class ReferrerForIpTest(APITestCase):
         ip = '123.123.123.123'
         referrer_name = 'peterFinch'
 
-        referrer = ReferrerFactory(name=referrer_name)
-        link = LinkFactory(referrer=referrer)
+        referrer = ReferrerFactory(name=referrer_name.upper())
+        link = LinkFactory(referrer=referrer, code=referrer_name)
         profile = ProfileFactory(ip=ip, link=link)
 
         response = self.client.get(self.url, {'ip': ip})
@@ -82,11 +82,11 @@ class ReferrerForIpTest(APITestCase):
         referrer_name = 'peterFinch'
         other_referrer_name = 'richShiels'
 
-        referrer = ReferrerFactory(name=referrer_name)
-        other_referrer = ReferrerFactory(name=other_referrer_name)
+        referrer = ReferrerFactory(name=referrer_name.upper())
+        other_referrer = ReferrerFactory(name=other_referrer_name.upper())
 
-        link = LinkFactory(referrer=referrer)
-        other_link = LinkFactory(referrer=other_referrer)
+        link = LinkFactory(referrer=referrer, code=referrer_name)
+        other_link = LinkFactory(referrer=other_referrer, code=other_referrer_name)
 
         ProfileFactory(ip=ip, link=other_link, installed_on=self.aware_datetime(2015, 12, 29, 0, 0))
         ProfileFactory(ip=ip, link=link, installed_on=self.aware_datetime(2015, 12, 30, 0, 0))
@@ -106,11 +106,11 @@ class ReferrerForIpTest(APITestCase):
         referrer_name = 'peterFinch'
         other_referrer_name = 'richShiels'
 
-        referrer = ReferrerFactory(name=referrer_name)
-        other_referrer = ReferrerFactory(name=other_referrer_name)
+        referrer = ReferrerFactory(name=referrer_name.upper())
+        other_referrer = ReferrerFactory(name=other_referrer_name.upper())
 
-        link = LinkFactory(referrer=referrer)
-        other_link = LinkFactory(referrer=other_referrer)
+        link = LinkFactory(referrer=referrer, code=referrer_name)
+        other_link = LinkFactory(referrer=other_referrer, code=other_referrer_name)
 
         ProfileFactory(ip=ip, link=other_link)
         ProfileFactory(ip=ip, link=link, installed_on=self.aware_datetime(2015, 12, 30, 0, 0))

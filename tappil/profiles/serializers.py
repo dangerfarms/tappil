@@ -17,7 +17,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 class ProfileIPSerializer(serializers.ModelSerializer):
 
-    referrer = serializers.ReadOnlyField(source='link.referrer.name')
+    referrer = serializers.ReadOnlyField(source='link.code')
     meta_data = serializers.SerializerMethodField()
 
     class Meta:
