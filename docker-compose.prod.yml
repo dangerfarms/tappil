@@ -1,0 +1,14 @@
+web:
+  command: /bin/bash --login -c "./manage.py collectstatic --noinput && ./manage.py migrate && uwsgi --http :8000 --wsgi-file project/wsgi.py --manage-script-name --static-map /static=/app/project/static;"
+  build: .
+  volumes_from:
+  - config
+  ports:
+    - 8000
+  labels:
+    io.rancher.sidekicks: config
+
+config:
+  build: .config/prod
+  labels:
+    io.rancher.container.start_once: "true"
