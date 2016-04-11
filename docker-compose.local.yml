@@ -2,8 +2,6 @@
 # For final local development testing to confirm behaviour when mimicking production settings e.g. DEBUG=False
 # Served over uwsgi like production.
 # NOTE: As it does not mount the project root you will have to run build before running to run the latest code
-
-
 version: '2'
 services:
   web:
@@ -22,4 +20,3 @@ services:
     build: .config/local
     command: /bin/true
     read_only: true
-#    stdin_open: true
