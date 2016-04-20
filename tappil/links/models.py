@@ -8,4 +8,5 @@ class Link(models.Model):
     referrer = models.ForeignKey(Referrer, related_name='links')
     deep_link = models.TextField()
 
-
+    def __str__(self):
+        return self.code
