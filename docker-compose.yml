@@ -1,14 +1,13 @@
-web:
-  command: /bin/bash --login -c "./manage.py migrate && ./manage.py runserver 0.0.0.0:8000"
-  tty: true
-  build: .
-  volumes:
-    - .:/app
-  ports:
-    - 8000:8000
-  links:
-    - db
-db:
-  image: mdillon/postgis
-  environment:
-    - POSTGRES_PASWORD=postgres
+version: "2"
+services:
+  web:
+    command: /bin/bash --login -c "./manage.py migrate && ./manage.py runserver 0.0.0.0:8000"
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000
+  db:
+    image: mdillon/postgis
+    environment:
+      - POSTGRES_PASWORD=postgres

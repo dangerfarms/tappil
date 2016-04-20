@@ -2,24 +2,20 @@
 # For final local development testing to confirm behaviour when mimicking production settings e.g. DEBUG=False
 # Served over uwsgi like production.
 # NOTE: As it does not mount the project root you will have to run build before running to run the latest code
-
-web:
-  command: /bin/bash --login -c "./manage.py collectstatic --noinput && ./manage.py migrate && uwsgi --http :8000 --wsgi-file project/wsgi.py --manage-script-name --static-map /static=/app/project/static;"
-  tty: true
-  build: .
-  volumes_from:
-    - config
-  links:
-    - db
-  ports:
-    - 8000:8000
-
-db:
-  image: mdillon/postgis
-  environment:
-    - POSTGRES_PASWORD=postgres
-
-config:
-  build: .config/local
-  command: cat
-  tty: true
+version: '2'
+services:
+  web:
+    build: .
+    command: /bin/bash --login -c "./manage.py collectstatic --noinput && ./manage.py migrate && uwsgi --http :8000 --wsgi-file project/wsgi.py --manage-script-name --static-map /static=/app/project/static;"
+    ports:
+      - 8000:8000
+    volumes_from:
+      - config
+  db:
+    image: mdillon/postgis
+    environment:
+      - POSTGRES_PASWORD=postgres
+  config:
+    build: .config/local
+    command: /bin/true
+    read_only: true
