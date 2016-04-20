@@ -14,9 +14,6 @@ class Profile(models.Model):
     user_agent = models.TextField()
 
     date_created = models.DateTimeField(default=timezone.now, null=True)
-
     link = models.ForeignKey(Link, related_name='profiles')
-
     meta_data = JSONField()
-
     installed_on = models.DateTimeField(null=True, blank=True)
