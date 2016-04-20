@@ -31,7 +31,7 @@ class ProfileMatch(APIView):
         if profile:
             device_uuid = request.data.get('device_uuid', None)
             if device_uuid == 'uuid removed manually':
-                profile.uuid = 'No UUID given: Profile {1}'.format(profile.id)
+                profile.uuid = 'No UUID given: Profile {0}'.format(profile.id)
             else:
                 profile.uuid = device_uuid
             new_install = profile.installed_on is None
@@ -42,5 +42,6 @@ class ProfileMatch(APIView):
             # TODO: this is not nice at all, sorry (balint)
             data = serializer.data
             data['new_install'] = new_install
-            return Response(data)
+            # return Response(data)
+            # TODO: Get back in when it's all nice and working.
         return Response({'new_install': True})
