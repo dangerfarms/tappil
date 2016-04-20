@@ -49,7 +49,11 @@ class ProfileMatch(APIView):
 
         profile = self.match_profile(ip, data)
         if profile:
-            profile.uuid = request.data.get('device_uuid', None)
+            device_uuid = request.data.get('device_uuid', None)
+            if device_uuid == 'uuid removed manually':
+                profile.uuid = '{0}:ID{1}'.format(device_uuid, profile.id)
+            else:
+                profile.uuid = device_uuid
             new_install = profile.installed_on is None
             if new_install:
                 profile.installed_on = timezone.now()

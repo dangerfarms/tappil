@@ -10,12 +10,10 @@ web:
   labels:
     io.rancher.sidekicks: config
     io.rancher.loadbalancer.target.referrals: tappil.pinseekerz.com=8000
-
 db:
   image: mdillon/postgis
   environment:
   - POSTGRES_PASWORD=postgres
-
 config:
   build: .config/dev
   labels:

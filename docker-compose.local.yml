@@ -13,10 +13,12 @@ web:
     - db
   ports:
     - 8000:8000
+
 db:
   image: mdillon/postgis
   environment:
     - POSTGRES_PASWORD=postgres
+
 config:
   build: .config/local
   command: cat
