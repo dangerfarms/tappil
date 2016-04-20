@@ -21,7 +21,7 @@ class ProfileMatchTest(APITestCase):
             'device_os': 'iOS',
         }
 
-        response = self.client.post(reverse('profile-match'), phone_data, **{'REMOTE_ADDR': '1.1.1.1'})
+        response = self.client.post(reverse('profile-match'), phone_data, **{'HTTP_X_FORWARDED_FOR': '1.1.1.1'})
 
         self.assertEqual(response.data['link']['deep_link'], self.deep_link)
 
@@ -47,7 +47,7 @@ class ProfileMatchTest(APITestCase):
             'device_family': 'iPhone',
         }
 
-        response = self.client.post(reverse('profile-match'), phone_data, **{'REMOTE_ADDR': '1.1.1.1'})
+        response = self.client.post(reverse('profile-match'), phone_data, **{'HTTP_X_FORWARDED_FOR': '1.1.1.1'})
 
         self.assertEqual(response.data['link']['deep_link'], deep_link)
         self.assertEqual(response.data['id'], p.id)
@@ -58,7 +58,7 @@ class ProfileMatchTest(APITestCase):
             'device_os': 'iOS',
         }
 
-        response = self.client.post(reverse('profile-match'), phone_data, **{'REMOTE_ADDR': '1.1.1.1'})
+        response = self.client.post(reverse('profile-match'), phone_data, **{'HTTP_X_FORWARDED_FOR': '1.1.1.1'})
         self.assertEqual(response.data['new_install'], True)
 
     def test_should_return_non_matching_new_install_field_for_new_installs(self):
@@ -66,7 +66,7 @@ class ProfileMatchTest(APITestCase):
             'device_os': 'iOS',
         }
 
-        response = self.client.post(reverse('profile-match'), phone_data, **{'REMOTE_ADDR': '1.1.1.1'})
+        response = self.client.post(reverse('profile-match'), phone_data, **{'HTTP_X_FORWARDED_FOR': '1.1.1.1'})
         self.assertEqual(response.data['new_install'], True)
 
     def test_should_return_false_new_install_field_for_not_new_installs(self):
@@ -76,10 +76,10 @@ class ProfileMatchTest(APITestCase):
         }
 
         # initial create
-        self.client.post(reverse('profile-match'), phone_data, **{'REMOTE_ADDR': '1.1.1.1'})
+        self.client.post(reverse('profile-match'), phone_data, **{'HTTP_X_FORWARDED_FOR': '1.1.1.1'})
 
         # second call
-        response = self.client.post(reverse('profile-match'), phone_data, **{'REMOTE_ADDR': '1.1.1.1'})
+        response = self.client.post(reverse('profile-match'), phone_data, **{'HTTP_X_FORWARDED_FOR': '1.1.1.1'})
         self.assertEqual(response.data['new_install'], False)
 
     def test_should_return_400_on_bad_input_not_500(self):
@@ -91,5 +91,5 @@ class ProfileMatchTest(APITestCase):
             "device_version": "browser"
         }
 
-        response = self.client.post(reverse('profile-match'), phone_data, **{'REMOTE_ADDR': '1.1.1.1'})
+        response = self.client.post(reverse('profile-match'), phone_data, **{'HTTP_X_FORWARDED_FOR': '1.1.1.1'})
         self.assertEqual(response.status_code, status.HTTP_200_OK)

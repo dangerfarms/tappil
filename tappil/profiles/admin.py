@@ -4,7 +4,7 @@ from tappil.profiles.models import Profile
 
 class ProfileAdmin(admin.ModelAdmin):
 
-    list_display = ('uuid', 'ip', 'installed_on', 'device_family', 'device_os', 'device_version', 'user_agent')
+    list_display = ('uuid', 'ip', 'date_created', 'installed_on', 'device_family', 'device_os', 'device_version', 'user_agent')
     search_fields = ('uuid', 'ip',)
 
 

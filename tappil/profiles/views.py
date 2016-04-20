@@ -36,7 +36,7 @@ class ProfileMatch(APIView):
         """
         Attempt to match a profile from a mobile SDK call.
         """
-        ip = request.META['REMOTE_ADDR']
+        ip = request.META['HTTP_X_FORWARDED_FOR']
         data = request.data
 
         device_lookup = {
