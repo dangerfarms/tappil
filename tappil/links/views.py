@@ -11,6 +11,11 @@ APP_STORE_URL = ''
 PLAY_STORE_URL = ''
 
 
+import logging
+logger = logging.getLogger(__name__)
+
+
+
 class Activation(TemplateView):
     template_name = 'index.html'
 
@@ -52,7 +57,7 @@ class Activation(TemplateView):
         """
         link = self.get_link()
 
-        ip = request.META['REMOTE_ADDR']
+        ip = request.META['HTTP_X_FORWARDED_FOR']
         profile, created = Profile.objects.get_or_create(ip=ip, link=link)
         self.set_profile(profile)
 
