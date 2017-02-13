@@ -1,2 +1,5 @@
 docker-compose.*
 .*
+*.pyc
+**/__pycache__
+rancher-compose.yml
