@@ -1,15 +1,19 @@
-web:
-  build: .
-  command: /bin/bash --login -c "./manage.py collectstatic --noinput && ./manage.py migrate && uwsgi --http :8000 --wsgi-file project/wsgi.py --manage-script-name --static-map /static=/app/project/static;"
-  labels:
-    io.rancher.sidekicks: config
-  ports:
-    - 8000
-  volumes_from:
-    - config
-config:
-  build: .config/prod
-  command: /bin/true
-  labels:
-    io.rancher.container.start_once: "true"
-  read_only: true
+version: "2"
+
+services:
+  web:
+    image: dangerfarms/ps-referrals:latest
+    command: /bin/bash --login -c "./manage.py collectstatic --noinput && ./manage.py migrate && uwsgi --http :8000 --wsgi-file project/wsgi.py --manage-script-name --static-map /static=/app/project/static;"
+    ports:
+      - 8000
+    volumes:
+      - ps-referrals-config-prod:/app/project/config
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.scheduler.affinity:host_label: environment=prod
+
+
+volumes:
+  ps-referrals-config-prod:
+    driver: rancher-nfs
+    external: true
