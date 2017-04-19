@@ -1,4 +1,4 @@
-FROM dangerfarms/geodrf-alpine
+FROM python:3.4
 ENV PYTHONUNBUFFERED 1
 #TODO: Figure out user permissions as running container as root is not good
 #RUN groupadd -r uwsgi && useradd -r -g uwsgi uwsgi

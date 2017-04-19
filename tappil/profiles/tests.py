@@ -48,7 +48,6 @@ class ProfileMatchTest(APITestCase):
         }
 
         response = self.client.post(reverse('profile-match'), phone_data, **{'HTTP_X_FORWARDED_FOR': '1.1.1.1'})
-        import ipdb; ipdb.set_trace()
 
         self.assertEqual(response.data['link']['deep_link'], deep_link)
         self.assertEqual(response.data['id'], p.id)
