@@ -1,3 +1,3 @@
 docker-compose up -d db
-mkdir project/config
+mkdir -p project/config
 touch project/config/settings.py

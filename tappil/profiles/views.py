@@ -8,8 +8,12 @@ from tappil.profiles.serializers import ProfileSerializer
 
 class ProfileMatch(APIView):
 
-    def match_profile(self, ip):
-        """Return the most recently logged user with a given IP or None"""
+    def match_profile(self, ip, device):
+        """Return the most recently logged user with a given IP or None
+        If device is specified, tries to fetch a Profile with that device family"""
+        profile_with_matching_device = Profile.objects.filter(device_family=device.family, ip=ip)
+        if profile_with_matching_device.exists():
+            return profile_with_matching_device.order_by('-date_created').first()
         return Profile.objects.filter(ip=ip).order_by('-date_created').first()
 
     def post(self, request, *args, **kwargs):
@@ -27,7 +31,7 @@ class ProfileMatch(APIView):
         }
         device, created = Device.objects.get_or_create(**device_lookup)
 
-        profile = self.match_profile(ip)
+        profile = self.match_profile(ip, device)
         if profile:
             device_uuid = request.data.get('device_uuid', None)
             if device_uuid == 'uuid removed manually':
@@ -42,6 +46,5 @@ class ProfileMatch(APIView):
             # TODO: this is not nice at all, sorry (balint)
             data = serializer.data
             data['new_install'] = new_install
-            # return Response(data)
-            # TODO: Get back in when it's all nice and working.
+            return Response(data)
         return Response({'new_install': True})
