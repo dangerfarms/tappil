@@ -17,3 +17,6 @@ class Profile(models.Model):
     link = models.ForeignKey(Link, related_name='profiles')
     meta_data = JSONField()
     installed_on = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return '{} ({})'.format(self.ip, self.device_os)
